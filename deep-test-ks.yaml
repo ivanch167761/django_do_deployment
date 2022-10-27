@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deeptest-deployment
+  labels:
+    app: deeptest-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deeptest-deployment
+  template:
+    metadata:
+      labels:
+        app: deeptest-deployment
+    spec:
+      containers:
+      - name: prostore
+        image: registry.digitalocean.com/deeptest/prostore:latest
+        envFrom:
+          - secretRef:
+              name: deep-test-prod-env
+        env:
+          - name: PORT
+            value: "8002"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: deeptest
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: deeptest-deployment
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8002
+  selector:
+    app: deeptest-deployment
+

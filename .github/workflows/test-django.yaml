@@ -15,7 +15,7 @@ jobs:
       run:
         working-directory: ./pro_store
     env:
-      DJANGO_SECRET_KEY: abcdefg!!A
+      DJANGO_SECRET_KEY: abcdefg!!!
       KEY: AAA
     strategy:
       max-parallel: 4

@@ -4,6 +4,7 @@ WORKDIR /app
 RUN python3 -m venv /opt/venv &&\
     pip install pip --upgrade &&\
     /opt/venv/bin/pip install -r requirements.txt &&\
-    chmod +x entrypoint.sh
+    chmod +x entrypoint.sh &&\
+    chmod +x collectstatic.sh
 
 CMD ["/app/entrypoint.sh"]

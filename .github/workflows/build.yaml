@@ -33,7 +33,7 @@ jobs:
             .
       - name: Push image
         run: |
-          docker push registry.digitalocean.com/prostore
+          docker push registry.digitalocean.com/deeptest/prostore
           --all-tags
 
 

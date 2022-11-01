@@ -8,11 +8,11 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  test_django:
+  test_django_job:
     uses: ivanch167761/django_to_deployment/.github.workflows/test-django.yaml@master
   build_docker:
     runs-on: ubuntu-latest
-    needs: [test_django]
+    needs: [test_django_job]
     env:
       DJANGO_SECRET_KEY: abcdefg!!!
     steps:

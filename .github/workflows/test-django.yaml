@@ -3,13 +3,8 @@ name: Django Test with PostgreSQL Example
 on:
   workflow_call:
   workflow_dispatch:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
 jobs:
-  build:
-
+  django_tests:
     runs-on: ubuntu-latest
     defaults:
       run:

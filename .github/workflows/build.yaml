@@ -1,0 +1,39 @@
+name: Build Docker Container & push to DO Registory
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  test_django:
+    uses: ivanch167761/django_to_deployment/.github.workflows/test-djangol.yaml@master
+  build_docker:
+    runs-on: ubuntu-latest
+    needs: [test_django]
+    env:
+      DJANGO_SECRET_KEY: abcdefg!!!
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          tocken: ${{ secrets.DO_API_TOKEN_KEY }}
+      - name: Login to DO with short-live creds
+        run: doctl registry login --expiry-seconds 1200
+      - name: build container image
+        working-directory: ./pro_store
+        run: |
+          docker build -f Dockerfile \
+            -t registry.digitalocean.com/deeptest/prostore:latest \
+            -t registry.digitalocean.com/deeptest/prostore:${GITHUB_SHA::7} \
+            .
+      - name: Push image
+        run: |
+          docker push registry.digitalocean.com/prostore
+          --all-tags
+
+

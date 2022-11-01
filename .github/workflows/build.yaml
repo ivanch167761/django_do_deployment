@@ -34,4 +34,16 @@ jobs:
       - name: Push image
         run: |
           docker push registry.digitalocean.com/deeptest/prostore --all-tags
-
+      - name: claster kubeconfig file
+        run: |
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
+      - name: Update Deploy image
+        run: |
+          kubectl set image deployment/deeptest-deployment deep-test=registry.digitalocean.com/deeptest/prostore:${GITHUB_SHA::7}
+      - name: wait for rollout to finish
+        run: |
+          kubectl rollout status deployment/deeptest-deployment
+      - name: Migrate Database Command
+        run: |
+          export SINGLE_POD_NAME=$(kubectl get pod -l app=deeptest-deployment -o jsonpath="{.items[0].metadata.name}")
+          kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh

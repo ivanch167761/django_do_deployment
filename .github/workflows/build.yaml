@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ secrets.DO_API_TOKEN_KEY }}
       - name: Login to DO with short-live creds
-        run: doctl registry login --expiry-seconds 1000
+        run: doctl registry login --expiry-seconds 1200
       - name: build container image
         working-directory: ./pro_store
         run: |

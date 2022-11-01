@@ -15,6 +15,7 @@ jobs:
     needs: [test_django_job]
     env:
       DJANGO_SECRET_KEY: abcdefg!!!
+      CLUSTER_NAME: deep-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

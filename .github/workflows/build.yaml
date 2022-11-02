@@ -16,6 +16,7 @@ jobs:
     env:
       DJANGO_SECRET_KEY: abcdefg!!!
       CLUSTER_NAME: deep-test
+      DEBUG: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,7 +42,7 @@ jobs:
       - name: Update deployment secrets
         run: |
           cat << EOF >> pro_store/.env.prod
-
+          DEBUG=1
           ENV_ALLOWED_HOST=${{ secrets.ENV_ALLOWED_HOST }}
           DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
           DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}

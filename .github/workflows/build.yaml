@@ -44,6 +44,7 @@ jobs:
           cat << EOF >> pro_store/.env.prod
           DEBUG=1
           ENV_ALLOWED_HOST=${{ secrets.ENV_ALLOWED_HOST }}
+          ENV_ALLOWED_HOST_FRONTEND=${{ secrets.ENV_ALLOWED_HOST_FRONTEND }}
           DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
           DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
           DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}

@@ -27,7 +27,8 @@ SECRET_KEY = str(os.environ.get("DJANGO_SECRET_KEY"))
 DEBUG = str(os.environ.get("DEBUG")) == "1"
 DEBUG = True
 ENV_ALLOWED_HOST=str(os.environ.get("ENV_ALLOWED_HOST"))
-ALLOWED_HOSTS = [ENV_ALLOWED_HOST]
+ENV_ALLOWED_HOST_FRONTEND=str(os.environ.get("ENV_ALLOWED_HOST_FRONTEND"))
+ALLOWED_HOSTS = [ENV_ALLOWED_HOST, ENV_ALLOWED_HOST_FRONTEND]
 
 
 # Application definition

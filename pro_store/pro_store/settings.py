@@ -213,8 +213,6 @@ STATICFILE_DIRS = [
         ]
 from .cdn.conf import * #noqa
 
-
-
 CORS_ALLOW_ALL_ORIGINS = True
 
 

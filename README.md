@@ -35,3 +35,10 @@
     export SINGLE_POD_NAME=$(kubectl get pod -l app=deeptest-deployment -o jsonpath="{.items[0].metadata.name}")
     '''
     kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh
+
+
+
+
+https://www.kubegres.io/doc/getting-started.html
+
+

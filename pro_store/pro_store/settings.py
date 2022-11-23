@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework',
     'corsheaders',
+    "django_extensions",
 ]
 
 REST_FRAMEWORK = {

@@ -39,19 +39,34 @@ ALLOWED_HOSTS = [ENV_ALLOWED_HOST,
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'base',
-    'storages',
-    'rest_framework',
-    'corsheaders',
-    "django_extensions",
-]
+if os.environ.get("DEV") == '1':
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'base',
+        'storages',
+        'rest_framework',
+        'corsheaders',
+        "django_extensions",
+    ]
+else:
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'base',
+        'storages',
+        'rest_framework',
+        'corsheaders',
+    ]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

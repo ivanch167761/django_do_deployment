@@ -15,7 +15,7 @@ jobs:
     needs: [test_django_job]
     env:
       DJANGO_SECRET_KEY: abcdefg!!!
-      CLUSTER_NAME: k8s-1-24-4-do-0-ams3-1669080686160
+      CLUSTER_NAME: k8s-1-25-4-do-0-ams3-1672906371804
       DEBUG: 1
     steps:
       - name: Checkout code

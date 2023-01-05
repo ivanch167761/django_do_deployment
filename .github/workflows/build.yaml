@@ -62,7 +62,6 @@ jobs:
 
 
           EOF
-          kubectl create secret generic deep-test-prod-env --from-env-file=pro_store/.env.prod
           kubectl delete secret deep-test-prod-env
           kubectl create secret generic deep-test-prod-env --from-env-file=pro_store/.env.prod
 

@@ -38,7 +38,7 @@ jobs:
           docker push registry.digitalocean.com/deeptest/prostore --all-tags
       - name: cluster kubeconfig file
         run: |
-          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 6000 ${{ env.CLUSTER_NAME }}
       - name: Update deployment secrets
         run: |
           cat << EOF >> pro_store/.env.prod

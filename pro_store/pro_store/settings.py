@@ -25,13 +25,16 @@ SECRET_KEY = str(os.environ.get("DJANGO_SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get("DEBUG")) == "1"
 DEBUG = True
-
+BACKEND_HOST='deeptest-deployment'
+FRONTEND_HOST='frontend-deployment'
 ENV_ALLOWED_HOST=str(os.environ.get("ENV_ALLOWED_HOST"))
 ENV_ALLOWED_HOST_FRONTEND=str(os.environ.get("ENV_ALLOWED_HOST_FRONTEND"))
 ENV_ALLOWED_HOST_BACKEND=str(os.environ.get("ENV_ALLOWED_HOST_BACKEND"))
 ENV_ALLOWED_HOST_FRONTEND_CLUSTER=str(os.environ.get("ENV_ALLOWED_HOST_FRONTEND_CLUSTER"))
 
-ALLOWED_HOSTS = [ENV_ALLOWED_HOST, 
+ALLOWED_HOSTS = [BACKEND_HOST,
+                 FRONTEND_HOST,
+                 ENV_ALLOWED_HOST, 
                  ENV_ALLOWED_HOST_FRONTEND, 
                  ENV_ALLOWED_HOST_FRONTEND_CLUSTER, 
                  ENV_ALLOWED_HOST_BACKEND]

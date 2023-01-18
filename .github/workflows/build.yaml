@@ -65,6 +65,10 @@ jobs:
           kubectl delete secret deep-test-prod-env
           kubectl create secret generic deep-test-prod-env --from-env-file=pro_store/.env.prod
 
+          echo secrets.POSTGRES_DB
+          echo pro_store/.env.prod
+
+
 
 
       - name: Update Deploy image

@@ -9,7 +9,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateUserProfile(request):
     user = request.user
@@ -21,8 +21,7 @@ def updateUserProfile(request):
     user.username = data['email']
     user.email = data['email']
 
-    if data['password'] != '':
-        user.password = make_password(data['password'])
+    user.password = make_password(data['password'])
 
     user.save()
     return Response(serializer.data)
@@ -52,6 +51,7 @@ def getUsers(request):
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
+        print(attrs)
 
         serializer = UserSerializerWithToken(self.user).data
 

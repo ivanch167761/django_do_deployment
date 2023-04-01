@@ -71,14 +71,17 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_shippingAddress(self, obj):
+
         try:
-            address = ShippingAddressSerializer(obj.shippingAddress, many=False).data
+            address = ShippingAddressSerializer(obj.shippingaddress, many=False).data
         except:
             address = False
         return address
 
     def get_user(self, obj):
         user = obj.user
+        print(UserSerializer(user, many=False).data)
+        print(obj)
         serializer = UserSerializer(user, many=False)
         return serializer.data
     def get_orderItems(self, obj):

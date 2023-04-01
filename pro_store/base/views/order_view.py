@@ -1,8 +1,10 @@
 from os import stat
 from django.shortcuts import render
+from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import serializers
 
 from base.serializers import ProductSerializer, OrderSerializer
 from rest_framework import status
@@ -14,17 +16,20 @@ from base.models import Order, OrderItem, Product, ShippingAddress
 def addOrderItems(request):
     user=request.user
     data=request.data
-    print(data)
     orderItems = data['orderItems']
 
     if OrderItem and len(orderItems) == 0:
         return Response({'detail': 'No OrderItems'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         #1)create order
-        totalPrice = 0
+        totalProductPrice = 0
         for i in orderItems:
             product = Product.objects.get(_id=i['product_ID'])
-            totalPrice += product.price*i['qty']
+            totalProductPrice += product.price*i['qty']
+        shippingPrice=data['shippingPrice']
+        totalPrice=float(totalProductPrice)+float(shippingPrice)
+        taxPrice=float(data['taxPrice'])*float(totalPrice)
+        totalPrice+=taxPrice
         order=Order.objects.create(
                 user=user,
                 paymentMethod=data['paymentMethod'],
@@ -35,10 +40,10 @@ def addOrderItems(request):
         #2)create ShippingAddress
         shipping=ShippingAddress.objects.create(
                 order=order,
-                address=data['address'],
-                city=data['city'],
-                postalCode=data['postalcode'],
-                country=data['country']
+                address=data['shippingAddress']['address'],
+                city=data['shippingAddress']['city'],
+                postalCode=data['shippingAddress']['postalcode'],
+                country=data['shippingAddress']['country']
                 )
         #3)create order and set order to order relationship 
         for i in orderItems:
@@ -73,3 +78,11 @@ def getOrderById(request, pk):
                     status=status.HTTP_400_BAD_REQUEST)
     except:
         return Response({'detail': 'Order does not exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyOrders(request):
+    user = request.user
+    orders = user.order_set.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)

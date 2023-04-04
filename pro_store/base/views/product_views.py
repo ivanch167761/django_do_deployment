@@ -5,36 +5,18 @@ from base.serializers import CategoryListSerializer, ProductSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
-
 @api_view(['GET'])
 def getProducts(request):
     products = Product.objects.all()
     serializer = ProductSerializer(products, many=True)
-
     return Response(serializer.data)
-
 
 @api_view(['GET'])
 def getProduct(request, pk):
     product = None
-
     product = Product.objects.get(_id=pk)
     serializer = ProductSerializer(product, many=False)
-
     return Response(serializer.data)
-
-
-@api_view(['GET'])
-def getCategoryProducts(request, cpk):
-    wantedCategory = Category.objects.filter(category=cpk)
-    wantedCategoryData = CategoryListSerializer(wantedCategory, many=True).data
-    wantedCategoryId = wantedCategoryData[0]['_id']
-
-    categoryProducts = Product.objects.filter(category=wantedCategoryId)
-    serializer = ProductSerializer(categoryProducts, many=True)
-
-    return Response(serializer.data)
-
 
 @api_view(['GET'])
 def getCategoryList(request):
@@ -42,6 +24,21 @@ def getCategoryList(request):
     serializer = CategoryListSerializer(categoryList, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getCategory(request, pk):
+    category = None
+    category = Category.objects.get(_id=pk)
+    serializer = CategoryListSerializer(category, many=False)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getCategoryProducts(request, cpk):
+    wantedCategory = Category.objects.filter(_id=cpk)
+    wantedCategoryData = CategoryListSerializer(wantedCategory, many=False).data
+    wantedCategoryId = wantedCategoryData[0]['_id']
+    categoryProducts = Product.objects.filter(category=wantedCategoryId)
+    serializer = ProductSerializer(categoryProducts, many=True)
+    return Response(serializer.data)
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
@@ -50,11 +47,17 @@ def deleteProduct(request, pk):
     product.delete()
     return Response('Product deleted')
 
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteCategory(request, pk):
+    category = Category.objects.get(_id=pk)
+    category.delete()
+    return Response('Category deleted')
+
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
     user = request.user
-
     product = Product.objects.create(
             user = user, 
             category = Category.objects.get(_id=1),
@@ -64,7 +67,6 @@ def createProduct(request):
             description = '',
             price = '0',
     )
-
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
@@ -77,7 +79,7 @@ def updateProduct(request, pk):
     product.brand = data['brand']
     product.price = data['price']
     product.countInStock = data['countInStock']
-    product.category = data['category']
+    product.category = Category.objects.get(category=data['category'])
     product.description = data['description']
     product.name = data['name']
     product.save()

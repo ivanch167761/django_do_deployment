@@ -71,7 +71,7 @@ jobs:
 
       - name: Update Deploy image
         run: |
-          kubectl set image deployment/deeptest-deployment prostore=registry.digitalocean.com/deeptest/backend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
+          kubectl set image deployment/deeptest-deployment backend=registry.digitalocean.com/deeptest/backend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
       - name: wait for rollout to finish
         run: |
           kubectl rollout status deployment/deeptest-deployment

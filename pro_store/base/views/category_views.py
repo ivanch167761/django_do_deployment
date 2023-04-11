@@ -33,3 +33,13 @@ def deleteCategory(request, cpk):
     category.delete()
     return Response('Category deleted')
 
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateCategory(request, pk):
+    data = request.data
+    category = Category.objects.get(_id=pk)
+    category.category = data['category']
+    category.description = data['description']
+    category.save()
+    serializer = CategoryListSerializer(category, many=False)
+    return Response(serializer.data)

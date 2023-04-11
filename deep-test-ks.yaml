@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: registry.digitalocean.com/deeptest/prostore:latest
+        image: registry.digitalocean.com/deeptest/backend:latest
         envFrom:
           - secretRef:
               name: deep-test-prod-env

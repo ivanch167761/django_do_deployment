@@ -4,9 +4,9 @@ on:
   workflow_call:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [admin_page]
   pull_request:
-    branches: [master]
+    branches: [admin_page]
 jobs:
   test_django_job:
     uses: ivanch167761/django_to_deployment/.github/workflows/test-django.yaml@master

@@ -15,7 +15,7 @@ spec:
         app: deeptest-deployment
     spec:
       containers:
-      - name: prostore
+      - name: backend
         image: registry.digitalocean.com/deeptest/prostore:latest
         envFrom:
           - secretRef:

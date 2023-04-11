@@ -63,10 +63,10 @@ jobs:
 
           EOF
           kubectl delete secret deep-test-prod-env
-          kubectl create secret generic deep-test-prod-env --from-env-file=pro_store/.env.prod
+          kubectl create secret generic deep-test-prod-env --from-env-file=pro_store/.env
           
           echo secrets.POSTGRES_DB
-          echo pro_store/.env.prod
+          echo pro_store/.env
 
 
       - name: Update Deploy image

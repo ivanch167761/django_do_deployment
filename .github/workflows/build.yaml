@@ -41,7 +41,7 @@ jobs:
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
       - name: Update deployment secrets
         run: |
-          cat << EOF >> pro_store/.env.prod
+          cat << EOF >> pro_store/.env
           DEBUG=1
           ENV_ALLOWED_HOST=${{ secrets.ENV_ALLOWED_HOST }}
           ENV_ALLOWED_HOST_BACKEND=${{ secrets.ENV_ALLOWED_HOST_BACKEND }}

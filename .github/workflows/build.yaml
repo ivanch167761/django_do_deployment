@@ -15,7 +15,7 @@ jobs:
     needs: [test_django_job]
     env:
       DJANGO_SECRET_KEY: abcdefg!!!
-      CLUSTER_NAME: k8s-1-25-4-do-0-ams3-1672906371804
+      CLUSTER_NAME: k8s-prostore
       DEBUG: 1
     steps:
       - name: Checkout code
@@ -30,12 +30,12 @@ jobs:
         working-directory: ./pro_store
         run: |
           docker build -f Dockerfile \
-            -t registry.digitalocean.com/deeptest/prostore:latest \
-            -t registry.digitalocean.com/deeptest/prostore:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+            -t registry.digitalocean.com/deeptest/backend:latest \
+            -t registry.digitalocean.com/deeptest/backend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
       - name: Push image
         run: |
-          docker push registry.digitalocean.com/deeptest/prostore --all-tags
+          docker push registry.digitalocean.com/deeptest/backend --all-tags
       - name: cluster kubeconfig file
         run: |
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
@@ -71,7 +71,7 @@ jobs:
 
       - name: Update Deploy image
         run: |
-          kubectl set image deployment/deeptest-deployment prostore=registry.digitalocean.com/deeptest/prostore:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
+          kubectl set image deployment/deeptest-deployment prostore=registry.digitalocean.com/deeptest/backend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
       - name: wait for rollout to finish
         run: |
           kubectl rollout status deployment/deeptest-deployment

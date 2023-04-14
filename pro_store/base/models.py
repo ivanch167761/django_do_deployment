@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class Category(models.Model):
     category = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, default='maxresdefault.jpg')
     description = models.TextField(null=True, blank=True)
     _id = models.AutoField(primary_key=True, editable=False)
 

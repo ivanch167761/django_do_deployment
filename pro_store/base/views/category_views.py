@@ -43,3 +43,25 @@ def updateCategory(request, pk):
     category.save()
     serializer = CategoryListSerializer(category, many=False)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+    category_id = data['_id']
+    category = Product.objects.get(_id=category_id)
+    category.image = request.FILES.get('image')
+    category.save()
+    return Response('Image was uploaded')
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createCategory(request):
+    user = request.user
+    print(user)
+    category = Category.objects.create(
+            category = 'New Category',
+            description = '',
+    )
+    serializer = CategoryListSerializer(category, many=False)
+    return Response(serializer.data)
+

@@ -48,7 +48,7 @@ def updateCategory(request, pk):
 def uploadImage(request):
     data = request.data
     category_id = data['_id']
-    category = Product.objects.get(_id=category_id)
+    category = Category.objects.get(_id=category_id)
     category.image = request.FILES.get('image')
     category.save()
     return Response('Image was uploaded')

@@ -33,7 +33,7 @@ def addOrderItems(request):
         order=Order.objects.create(
                 user=user,
                 paymentMethod=data['paymentMethod'],
-                shippingMethod=data['shippingMethod']
+                shippingMethod=data['shippingMethod'],
                 taxPrice=float(data['taxPrice'])*float(totalPrice),
                 shippingPrice=data['shippingPrice'],
                 totalPrice=totalPrice
@@ -45,8 +45,8 @@ def addOrderItems(request):
                 city=data['shippingAddress']['city'],
                 postalCode=data['shippingAddress']['postalcode'],
                 phoneNumber=data['shippingAddress']['phone'],
-                comment=data['shippingAddress']['comment']
-                country=data['shippingAddress']['country']
+                comment=data['shippingAddress']['comment'],
+                country=data['shippingAddress']['country'],
                 )
         #3)create order and set order to order relationship 
         for i in orderItems:

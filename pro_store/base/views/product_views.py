@@ -96,3 +96,21 @@ def uploadImage(request):
     return Response('Image was uploaded')
 
 
+@api_view(['POST'])
+def uploadSecondImage(request):
+    data = request.data
+    product_id = data['product_id']
+    product = Product.objects.get(_id=product_id)
+    product.imageSecond = request.FILES.get('imageSecond')
+    product.save()
+    return Response('second Image was uploaded')
+
+
+@api_view(['POST'])
+def uploadThirdImage(request):
+    data = request.data
+    product_id = data['product_id']
+    product = Product.objects.get(_id=product_id)
+    product.imageThird = request.FILES.get('imageThird')
+    product.save()
+    return Response('third Image was uploaded')

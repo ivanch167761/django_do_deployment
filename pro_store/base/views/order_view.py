@@ -129,7 +129,6 @@ def udateOrderTrackingNumber(request, pk):
     order = Order.objects.get(_id=pk)
     order.trackingNumber = data['trackingNumber']
     order.save()
-
     return Response('tracking number was changed')
 
 

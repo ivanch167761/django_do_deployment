@@ -5,6 +5,7 @@
     python manage.py test
     ```
 
+
 2. Build conatiner
     ```
     docker build -f Dockerfile \
